@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'shader_art_shader.dart';
 import 'shadertoy_new_shader.dart';
 
 void main() async {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(colorSchemeSeed: Colors.deepPurple),
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -30,11 +32,39 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+enum ShaderType { shadertoy, shaderart }
+
 class _MyHomePageState extends State<MyHomePage> {
+  ShaderType _shaderType = ShaderType.shadertoy;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ShadertoyNewShader(),
+      appBar: AppBar(
+        title: Text('Shader Gallery'),
+        actions: <Widget>[
+          PopupMenuButton<ShaderType>(
+            onSelected: (ShaderType result) {
+              setState(() {
+                _shaderType = result;
+              });
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<ShaderType>>[
+              const PopupMenuItem<ShaderType>(
+                value: ShaderType.shadertoy,
+                child: Text('Shadertoy'),
+              ),
+              const PopupMenuItem<ShaderType>(
+                value: ShaderType.shaderart,
+                child: Text('Shader Art'),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: switch (_shaderType) {
+        ShaderType.shadertoy => ShadertoyNewShader(),
+        ShaderType.shaderart => ShaderArtShader(),
+      },
     );
   }
 }

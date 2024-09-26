@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_shaders: ^0.1.3
+  xml: ^6.5.0
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -20,4 +21,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   shaders:
+    - shaders/shader-art.frag 
     - shaders/shadertoy.frag

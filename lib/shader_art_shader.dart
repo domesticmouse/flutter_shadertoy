@@ -8,14 +8,14 @@ import 'package:flutter_shaders/flutter_shaders.dart';
 
 import 'shader_painter.dart';
 
-class ShadertoyNewShader extends StatefulWidget {
-  const ShadertoyNewShader({super.key});
+class ShaderArtShader extends StatefulWidget {
+  const ShaderArtShader({super.key});
 
   @override
-  State<ShadertoyNewShader> createState() => _ShadertoyNewShaderState();
+  State<ShaderArtShader> createState() => _ShaderArtShaderState();
 }
 
-class _ShadertoyNewShaderState extends State<ShadertoyNewShader>
+class _ShaderArtShaderState extends State<ShaderArtShader>
     with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   double _tick = 0;
@@ -44,10 +44,8 @@ class _ShadertoyNewShaderState extends State<ShadertoyNewShader>
         painter: ShaderPainter(shader, _tick),
         child: child,
       ),
-      assetKey: 'shaders/shadertoy.frag',
-      child: Center(
-        child: Text('Hello, Shader'),
-      ),
+      assetKey: 'shaders/shader-art.frag',
+      child: SizedBox.expand(),
     );
   }
 }

@@ -9,7 +9,7 @@ on:
 jobs:
   lint-and-test:
     name: Static code analysis
-    runs-on: linux-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Flutter

@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shadertoy/main.dart';
 
 void main() {
-  testWidgets('Foud Hello, Shader smoke test', (WidgetTester tester) async {
+  testWidgets('AppBar presence', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       const MaterialApp(
@@ -13,7 +13,7 @@ void main() {
       ),
     );
 
-    // Verify that our app displays the text 'Hello, Shader'.
-    expect(find.text('Hello, Shader'), findsOneWidget);
+    // Verify that our app has an AppBar.
+    expect(find.text('Shader Gallery'), findsOneWidget);
   });
 }

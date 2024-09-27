@@ -41,10 +41,7 @@ void main() {
 
   vec2 uv = (FlutterFragCoord().xy - 0.5 * uSize.xy) / uSize.y;
   float m = mandelbrot(uv);
-  vec3 col = vec3(m);
-  // col = pow(col, vec3(0.3));
-
-  // col += hash13(m);
+  vec3 col = hash13(m);
 
   fragColor = vec4(col, 1.0);
 }

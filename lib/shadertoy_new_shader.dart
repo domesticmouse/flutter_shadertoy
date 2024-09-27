@@ -46,7 +46,7 @@ class _ShadertoyNewShaderState extends State<ShadertoyNewShader>
       ),
       assetKey: 'shaders/shadertoy.frag',
       child: Center(
-        child: Text('Hello, Shader'),
+        child: SizedBox.expand(),
       ),
     );
   }

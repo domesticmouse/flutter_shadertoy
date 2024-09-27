@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'mandelbrot_shader.dart';
 import 'shader_art_shader.dart';
 import 'shadertoy_new_shader.dart';
 
@@ -32,7 +33,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-enum ShaderType { shadertoy, shaderart }
+enum ShaderType { shadertoy, shaderart, mandelbrot }
 
 class _MyHomePageState extends State<MyHomePage> {
   ShaderType _shaderType = ShaderType.shadertoy;
@@ -48,14 +49,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 _shaderType = result;
               });
             },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<ShaderType>>[
-              const PopupMenuItem<ShaderType>(
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
                 value: ShaderType.shadertoy,
                 child: Text('Shadertoy'),
               ),
-              const PopupMenuItem<ShaderType>(
+              PopupMenuItem(
                 value: ShaderType.shaderart,
                 child: Text('Shader Art'),
+              ),
+              PopupMenuItem(
+                value: ShaderType.mandelbrot,
+                child: Text('Mandelbrot'),
               ),
             ],
           ),
@@ -64,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: switch (_shaderType) {
         ShaderType.shadertoy => ShadertoyNewShader(),
         ShaderType.shaderart => ShaderArtShader(),
+        ShaderType.mandelbrot => MandelbrotShader(),
       },
     );
   }

@@ -21,5 +21,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   shaders:
+    - shaders/mandelbrot.frag
     - shaders/shader-art.frag 
     - shaders/shadertoy.frag

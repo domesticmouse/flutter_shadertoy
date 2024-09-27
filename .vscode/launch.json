@@ -10,16 +10,12 @@
             "type": "dart"
         },
         {
-            "name": "shadertoy (profile mode)",
+            "name": "shadertoy impeller",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "args": [
+                "--enable-impeller"
+            ]
         },
-        {
-            "name": "shadertoy (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
     ]
 }

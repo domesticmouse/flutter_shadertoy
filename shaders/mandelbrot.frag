@@ -11,9 +11,8 @@ uniform float uTime;
 
 out vec4 fragColor;
 
-const float MAX_ITER = 512.0;
-
 float mandelbrot(vec2 uv) {
+  const float MAX_ITER = 512;
   vec2 c = 2.4 * uv - vec2(0.7, 0.0);
   vec2 z = vec2(0.0);
 
@@ -31,7 +30,7 @@ vec3 hash13(float m) {
   if (m == 0.0)
     return vec3(0.0);
 
-  float r = fract(sin(m + uTime / 1290.0) * 995);
+  float r = fract(sin(m + uTime / 5000) * 500);
   float g = fract(sin(m + r));
   float b = fract(sin(m + r + g));
   return vec3(r, g, b);
@@ -39,7 +38,7 @@ vec3 hash13(float m) {
 
 void main() {
 
-  vec2 uv = (FlutterFragCoord().xy - 0.5 * uSize.xy) / uSize.y;
+  vec2 uv = (FlutterFragCoord() - 0.5 * uSize) / uSize.y;
   float m = mandelbrot(uv);
   vec3 col = hash13(m);
 

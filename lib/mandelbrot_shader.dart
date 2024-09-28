@@ -2,11 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_shaders/flutter_shaders.dart';
+import 'dart:ui' as ui;
 
-import 'shader_painter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_shaders/flutter_shaders.dart';
 
 class MandelbrotShader extends StatefulWidget {
   const MandelbrotShader({super.key});
@@ -17,35 +16,66 @@ class MandelbrotShader extends StatefulWidget {
 
 class _MandelbrotShaderState extends State<MandelbrotShader>
     with SingleTickerProviderStateMixin {
-  late Ticker _ticker;
-  double _tick = 0;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _ticker = createTicker((elapsed) {
-      setState(() {
-        _tick += 0.025;
-      });
-    });
-    _ticker.start();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 30),
+    )..repeat(reverse: true);
+    final Animation<double> curve =
+        CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _animation = Tween(begin: 0.0, end: 500.0).animate(curve);
   }
 
   @override
   void dispose() {
-    _ticker.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ShaderBuilder(
-      (context, shader, child) => CustomPaint(
-        painter: ShaderPainter(shader, _tick),
-        child: child,
-      ),
+      (context, shader, child) {
+        return AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: ShaderPainter(shader, _animation.value),
+              child: child,
+            );
+          },
+          child: child,
+        );
+      },
       assetKey: 'shaders/mandelbrot.frag',
       child: SizedBox.expand(),
     );
   }
+}
+
+class ShaderPainter extends CustomPainter {
+  const ShaderPainter(this.shader, this.progress);
+  final ui.FragmentShader shader;
+  final double progress;
+
+  @override
+  void paint(ui.Canvas canvas, ui.Size size) {
+    shader.setFloatUniforms((uniforms) {
+      uniforms.setSize(size);
+      uniforms.setFloat(progress);
+    });
+    canvas.drawRect(
+        Offset.zero & size,
+        Paint()
+          ..style = ui.PaintingStyle.fill
+          ..shader = shader);
+  }
+
+  @override
+  bool shouldRepaint(covariant ShaderPainter oldDelegate) => true;
 }

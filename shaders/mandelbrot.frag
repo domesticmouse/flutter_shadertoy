@@ -7,13 +7,14 @@ precision mediump float;
 #include <flutter/runtime_effect.glsl>
 
 uniform vec2 uSize;
-uniform float uTime;
+uniform float uProgress;
 
 out vec4 fragColor;
 
 const float MAX_ITER = 512.0;
 
 float mandelbrot(vec2 uv) {
+  const float MAX_ITER = 128;
   vec2 c = 2.4 * uv - vec2(0.7, 0.0);
   vec2 z = vec2(0.0);
 
@@ -31,7 +32,7 @@ vec3 hash13(float m) {
   if (m == 0.0)
     return vec3(0.0);
 
-  float r = fract(sin(m + uTime / 1290.0) * 995);
+  float r = fract(sin(m) * uProgress);
   float g = fract(sin(m + r));
   float b = fract(sin(m + r + g));
   return vec3(r, g, b);
